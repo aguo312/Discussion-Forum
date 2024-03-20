@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const RegisterForm = (props) => {
@@ -41,13 +42,10 @@ const RegisterForm = (props) => {
         : false;
     setInvalidEmail(!(validPartitionLength && validEndLength));
   }, [emailDomain]);
-  useEffect(
-    () =>
-      setInvalidPassword(
-        password.includes(user) || password.includes(emailName)
-      ),
-    [user, emailName, password]
-  );
+  useEffect(() => {
+    console.log(password.includes(user), password.includes(emailName));
+    setInvalidPassword(password.includes(user) || password.includes(emailName));
+  }, [user, emailName, password]);
   useEffect(() => setPasswordMismatch(password !== verify), [password, verify]);
   useEffect(
     () =>
@@ -101,6 +99,11 @@ const RegisterForm = (props) => {
       alert(error);
     } else {
       console.log("checking register");
+      axios.get("http://localhost:8080/hello").then((res) => {
+        if (res.data) {
+          console.log(res.data);
+        }
+      });
     }
   };
 
