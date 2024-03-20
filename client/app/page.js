@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       {welcome && <Welcome showRegister={setRegister}></Welcome>}
-      {register && <RegisterForm />}
+      {register && <RegisterForm showRegister={setRegister}></RegisterForm>}
     </>
   );
 }
