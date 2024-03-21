@@ -42,10 +42,13 @@ const RegisterForm = (props) => {
         : false;
     setInvalidEmail(!(validPartitionLength && validEndLength));
   }, [emailDomain]);
-  useEffect(() => {
-    console.log(password.includes(user), password.includes(emailName));
-    setInvalidPassword(password.includes(user) || password.includes(emailName));
-  }, [user, emailName, password]);
+  useEffect(
+    () =>
+      setInvalidPassword(
+        password.includes(user) || password.includes(emailName)
+      ),
+    [user, emailName, password]
+  );
   useEffect(() => setPasswordMismatch(password !== verify), [password, verify]);
   useEffect(
     () =>
@@ -98,10 +101,17 @@ const RegisterForm = (props) => {
       }
       alert(error);
     } else {
-      console.log("checking register");
-      axios.get("http://localhost:8080/hello").then((res) => {
+      axios.get("http://localhost:8080/user/" + email).then((res) => {
         if (res.data) {
           console.log(res.data);
+          error += "Email is already used by another user.\n";
+          alert(error);
+        } else {
+          axios
+            .post("http://localhost:8080/register", [user, email, password])
+            .then((res) => {
+              console.log(res.data);
+            });
         }
       });
     }
