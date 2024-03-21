@@ -1,6 +1,6 @@
 package com.DiscussionForum.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,14 +14,14 @@ public class User {
     private String email;
     private String password;
     private int reputation;
-    private LocalDate timeCreated;
+    private LocalDateTime timeCreated;
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.reputation = 0;
-        this.timeCreated = LocalDate.now();
+        this.timeCreated = LocalDateTime.now();
     }
 
     public String getId() {
@@ -64,11 +64,11 @@ public class User {
         this.reputation = reputation;
     }
 
-    public LocalDate getTimeCreated() {
+    public LocalDateTime getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(LocalDate timeCreated) {
+    public void setTimeCreated(LocalDateTime timeCreated) {
         this.timeCreated = timeCreated;
     }
 
