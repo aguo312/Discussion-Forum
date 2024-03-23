@@ -103,14 +103,13 @@ const RegisterForm = (props) => {
     } else {
       axios.get("http://localhost:8080/user/" + email).then((res) => {
         if (res.data) {
-          console.log(res.data);
           error += "Email is already used by another user.\n";
           alert(error);
         } else {
           axios
             .post("http://localhost:8080/register", [user, email, password])
             .then((res) => {
-              console.log(res.data);
+              handleClickBack(); // temporary
             });
         }
       });
