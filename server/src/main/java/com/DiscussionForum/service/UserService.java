@@ -19,4 +19,12 @@ public class UserService {
     public User newUser(String username, String email, String password) {
         return userRepository.save(new User(username, email, password));
     }
+
+    public User verifyPassword(String email, String password) {
+        User user = getUserByEmail(email);
+        if (user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
 }

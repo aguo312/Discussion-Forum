@@ -4,7 +4,7 @@ const Welcome = (props) => {
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
 
-  const handleClickLogin = () => setLogin(!login);
+  const handleClickLogin = () => props.showLogin(true);
   const handleClickRegister = () => props.showRegister(true);
   const handleClickGuest = () => console.log("Guest");
 

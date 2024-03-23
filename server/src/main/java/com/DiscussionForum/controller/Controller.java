@@ -33,4 +33,9 @@ public class Controller {
     public User addUser(@RequestBody String[] info) {
         return userService.newUser(info[0], info[1], info[2]);
     }
+
+    @PostMapping("/login")
+    public User checkUser(@RequestBody String[] info) {
+        return userService.verifyPassword(info[0], info[1]);
+    }
 }
