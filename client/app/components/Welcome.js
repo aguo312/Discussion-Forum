@@ -1,12 +1,9 @@
-import { useState } from "react";
-
 const Welcome = (props) => {
-  const [login, setLogin] = useState(false);
-  const [register, setRegister] = useState(false);
-
   const handleClickLogin = () => props.showLogin(true);
   const handleClickRegister = () => props.showRegister(true);
-  const handleClickGuest = () => console.log("Guest");
+  const handleClickGuest = () => {
+    props.showBanner(true);
+  };
 
   return (
     <>
@@ -16,7 +13,6 @@ const Welcome = (props) => {
       <button onClick={handleClickRegister}>Register</button>
       <br />
       <button onClick={handleClickGuest}>Continue As Guest</button>
-      {register}
     </>
   );
 };

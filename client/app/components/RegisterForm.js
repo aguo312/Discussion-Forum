@@ -109,7 +109,8 @@ const RegisterForm = (props) => {
           axios
             .post("http://localhost:8080/register", [user, email, password])
             .then((res) => {
-              handleClickBack(); // temporary
+              handleRegister();
+              // show front page
             });
         }
       });
@@ -117,6 +118,10 @@ const RegisterForm = (props) => {
   };
 
   const handleClickBack = () => props.showRegister(false);
+  const handleRegister = () => {
+    props.showBanner(true);
+    props.showDataTable(true);
+  };
 
   return (
     <>

@@ -34,11 +34,11 @@ const LoginForm = (props) => {
         if (!res.data) {
           error += "Unregistered Email.\n";
         } else {
-          console.log(res.data);
           axios
             .post("http://localhost:8080/login", [email, password])
             .then((res) => {
-              handleClickBack(); // temporary
+              handleLogin();
+              // show front page
             });
         }
       });
@@ -46,6 +46,10 @@ const LoginForm = (props) => {
   };
 
   const handleClickBack = () => props.showLogin(false);
+  const handleLogin = () => {
+    props.showBanner(true);
+    props.showDataTable(true);
+  };
 
   return (
     <>
