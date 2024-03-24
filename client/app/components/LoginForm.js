@@ -1,7 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../page";
 
 const LoginForm = (props) => {
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -9,6 +11,7 @@ const LoginForm = (props) => {
   const [emptyPassword, setEmptyPassword] = useState(true);
   const [errorDetected, setErrorDetected] = useState(true);
 
+  useEffect(() => console.log(user), []);
   useEffect(() => setEmptyEmail(email.length < 1), [email]);
   useEffect(() => setEmptyPassword(password.length < 1), [password]);
   useEffect(
@@ -37,7 +40,7 @@ const LoginForm = (props) => {
           axios
             .post("http://localhost:8080/login", [email, password])
             .then((res) => {
-              handleLogin();
+              handleLogin(res.data);
               // show front page
             });
         }
@@ -46,9 +49,10 @@ const LoginForm = (props) => {
   };
 
   const handleClickBack = () => props.showLogin(false);
-  const handleLogin = () => {
+  const handleLogin = (user) => {
     props.showBanner(true);
     props.showDataTable(true);
+    setUser(user);
   };
 
   return (

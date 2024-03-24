@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Banner from "./components/Banner";
 import Welcome from "./components/Welcome";
 import RegisterForm from "./components/RegisterForm";
@@ -7,7 +7,10 @@ import LoginForm from "./components/LoginForm";
 import DataTable from "./components/DataTable";
 import QuestionForm from "./components/QuestionForm";
 
+export const UserContext = createContext();
+
 export default function Home() {
+  const [user, setUser] = useState(null);
   const [welcome, setWelcome] = useState(true);
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
@@ -41,7 +44,7 @@ export default function Home() {
   }, [askQuestion]);
 
   return (
-    <>
+    <UserContext.Provider value={{ user, setUser }}>
       {welcome && (
         <Welcome
           showLogin={setLogin}
@@ -66,6 +69,6 @@ export default function Home() {
       {banner && <Banner showWelcome={setWelcome}></Banner>}
       {dataTable && <DataTable showAskQuestion={setAskQuestion}></DataTable>}
       {askQuestion && <QuestionForm></QuestionForm>}
-    </>
+    </UserContext.Provider>
   );
 }

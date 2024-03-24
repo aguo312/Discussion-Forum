@@ -121,6 +121,7 @@ const RegisterForm = (props) => {
   const handleRegister = () => {
     props.showBanner(true);
     props.showDataTable(true);
+    setUser(user);
   };
 
   return (
