@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { GlobalContext } from "../page";
 
-const RegisterForm = (props) => {
-  const [user, setUser] = useState("");
+const RegisterForm = () => {
+  const { setUser, setWelcome, setRegister, setBanner, setDataTable } =
+    useContext(GlobalContext);
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verify, setVerify] = useState("");
 
-  const [emptyUser, setEmptyUser] = useState(true);
+  const [emptyUsername, setEmptyUsername] = useState(true);
   const [emptyEmail, setEmptyEmail] = useState(true);
   const [emptyPassword, setEmptyPassword] = useState(true);
   const [emptyVerify, setEmptyVerify] = useState(true);
@@ -18,7 +21,7 @@ const RegisterForm = (props) => {
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [errorDetected, setErrorDetected] = useState(true);
 
-  useEffect(() => setEmptyUser(user.length < 1), [user]);
+  useEffect(() => setEmptyUsername(username.length < 1), [username]);
   useEffect(() => setEmptyEmail(email.length < 1), [email]);
   useEffect(() => setEmptyPassword(password.length < 1), [password]);
   useEffect(() => setEmptyVerify(verify.length < 1), [verify]);
@@ -45,15 +48,15 @@ const RegisterForm = (props) => {
   useEffect(
     () =>
       setInvalidPassword(
-        password.includes(user) || password.includes(emailName)
+        password.includes(username) || password.includes(emailName)
       ),
-    [user, emailName, password]
+    [username, emailName, password]
   );
   useEffect(() => setPasswordMismatch(password !== verify), [password, verify]);
   useEffect(
     () =>
       setErrorDetected(
-        emptyUser ||
+        emptyUsername ||
           emptyEmail ||
           emptyPassword ||
           emptyVerify ||
@@ -62,7 +65,7 @@ const RegisterForm = (props) => {
           passwordMismatch
       ),
     [
-      emptyUser,
+      emptyUsername,
       emptyEmail,
       emptyPassword,
       emptyVerify,
@@ -72,7 +75,7 @@ const RegisterForm = (props) => {
     ]
   );
 
-  const handleUserChange = (e) => setUser(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleVerifyChange = (e) => setVerify(e.target.value);
@@ -81,7 +84,7 @@ const RegisterForm = (props) => {
     e.preventDefault();
     let error = "Problems detected!\n";
     if (errorDetected) {
-      if (emptyUser) {
+      if (emptyUsername) {
         error += "Username field is empty.\n";
       }
       if (emptyEmail) {
@@ -107,20 +110,23 @@ const RegisterForm = (props) => {
           alert(error);
         } else {
           axios
-            .post("http://localhost:8080/register", [user, email, password])
+            .post("http://localhost:8080/register", [username, email, password])
             .then((res) => {
-              handleRegister();
-              // show front page
+              handleRegister(res.data);
             });
         }
       });
     }
   };
 
-  const handleClickBack = () => props.showRegister(false);
-  const handleRegister = () => {
-    props.showBanner(true);
-    props.showDataTable(true);
+  const handleClickBack = () => {
+    setRegister(false);
+    setWelcome(true);
+  };
+  const handleRegister = (user) => {
+    setRegister(false);
+    setBanner(true);
+    setDataTable(true);
     setUser(user);
   };
 
@@ -129,7 +135,7 @@ const RegisterForm = (props) => {
       <form>
         <label>
           Username: <br />
-          <input onChange={handleUserChange}></input>
+          <input onChange={handleUsernameChange}></input>
         </label>
         <br />
         <br />

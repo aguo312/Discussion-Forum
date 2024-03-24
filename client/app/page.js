@@ -7,7 +7,7 @@ import LoginForm from "./components/LoginForm";
 import DataTable from "./components/DataTable";
 import QuestionForm from "./components/QuestionForm";
 
-export const UserContext = createContext();
+export const GlobalContext = createContext();
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -18,33 +18,44 @@ export default function Home() {
   const [dataTable, setDataTable] = useState(false);
   const [askQuestion, setAskQuestion] = useState(false);
 
-  useEffect(() => {
-    if (login || register || banner) setWelcome(false);
-    else setWelcome(true);
-  }, [login, register, banner]);
+  // useEffect(() => {
+  //   if (login || register || banner) setWelcome(false);
+  //   else setWelcome(true);
+  // }, [login, register, banner]);
 
-  useEffect(() => {
-    if (banner) {
-      setWelcome(false);
-      setLogin(false);
-      setRegister(false);
-    }
-  }, [banner]);
+  // useEffect(() => {
+  //   if (banner) {
+  //     setWelcome(false);
+  //     setLogin(false);
+  //     setRegister(false);
+  //   }
+  // }, [banner]);
 
-  useEffect(() => {
-    if (welcome) {
-      setLogin(false);
-      setRegister(false);
-      setBanner(false);
-    }
-  }, [welcome]);
+  // useEffect(() => {
+  //   if (welcome) {
+  //     setLogin(false);
+  //     setRegister(false);
+  //     setBanner(false);
+  //   }
+  // }, [welcome]);
 
-  useEffect(() => {
-    setDataTable(false);
-  }, [askQuestion]);
+  // useEffect(() => {
+  //   setDataTable(false);
+  // }, [askQuestion]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <GlobalContext.Provider
+      value={{
+        user,
+        setUser,
+        setWelcome,
+        setLogin,
+        setRegister,
+        setBanner,
+        setDataTable,
+        setAskQuestion,
+      }}
+    >
       {welcome && (
         <Welcome
           showLogin={setLogin}
@@ -69,6 +80,6 @@ export default function Home() {
       {banner && <Banner showWelcome={setWelcome}></Banner>}
       {dataTable && <DataTable showAskQuestion={setAskQuestion}></DataTable>}
       {askQuestion && <QuestionForm></QuestionForm>}
-    </UserContext.Provider>
+    </GlobalContext.Provider>
   );
 }

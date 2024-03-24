@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../page";
+import { GlobalContext } from "../page";
 
-const LoginForm = (props) => {
-  const { user, setUser } = useContext(UserContext);
+const LoginForm = () => {
+  const { setUser, setWelcome, setLogin, setBanner, setDataTable } =
+    useContext(GlobalContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,7 +12,6 @@ const LoginForm = (props) => {
   const [emptyPassword, setEmptyPassword] = useState(true);
   const [errorDetected, setErrorDetected] = useState(true);
 
-  useEffect(() => console.log(user), []);
   useEffect(() => setEmptyEmail(email.length < 1), [email]);
   useEffect(() => setEmptyPassword(password.length < 1), [password]);
   useEffect(
@@ -41,17 +41,20 @@ const LoginForm = (props) => {
             .post("http://localhost:8080/login", [email, password])
             .then((res) => {
               handleLogin(res.data);
-              // show front page
             });
         }
       });
     }
   };
 
-  const handleClickBack = () => props.showLogin(false);
+  const handleClickBack = () => {
+    setLogin(false);
+    setWelcome(true);
+  };
   const handleLogin = (user) => {
-    props.showBanner(true);
-    props.showDataTable(true);
+    setLogin(false);
+    setBanner(true);
+    setDataTable(true);
     setUser(user);
   };
 

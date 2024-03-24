@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../page";
+import { GlobalContext } from "../page";
 
 const QuestionForm = (props) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(GlobalContext);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [text, setText] = useState("");

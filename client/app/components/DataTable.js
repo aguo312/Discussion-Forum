@@ -1,5 +1,12 @@
-const DataTable = (props) => {
-  const handleAskQuestionClick = () => props.showAskQuestion(true);
+import { useContext } from "react";
+import { GlobalContext } from "../page";
+
+const DataTable = () => {
+  const { setDataTable, setAskQuestion } = useContext(GlobalContext);
+  const handleAskQuestionClick = () => {
+    setDataTable(false);
+    setAskQuestion(true);
+  };
 
   return (
     <>

@@ -1,8 +1,21 @@
-const Welcome = (props) => {
-  const handleClickLogin = () => props.showLogin(true);
-  const handleClickRegister = () => props.showRegister(true);
+import { useContext } from "react";
+import { GlobalContext } from "../page";
+
+const Welcome = () => {
+  const { setWelcome, setLogin, setRegister, setBanner, setDataTable } =
+    useContext(GlobalContext);
+  const handleClickLogin = () => {
+    setLogin(true);
+    setWelcome(false);
+  };
+  const handleClickRegister = () => {
+    setRegister(true);
+    setWelcome(false);
+  };
   const handleClickGuest = () => {
-    props.showBanner(true);
+    setWelcome(false);
+    setBanner(true);
+    setDataTable(true);
   };
 
   return (
