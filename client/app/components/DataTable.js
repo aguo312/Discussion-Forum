@@ -1,4 +1,6 @@
 const DataTable = (props) => {
+  const handleAskQuestionClick = () => props.showAskQuestion(true);
+
   return (
     <>
       <table>
@@ -6,7 +8,9 @@ const DataTable = (props) => {
           <tr>
             <th># Questions</th>
             <th>Title</th>
-            <th>Ask Question</th>
+            <th>
+              <button onClick={handleAskQuestionClick}>Ask A Question</button>
+            </th>
           </tr>
         </thead>
         <tbody>
