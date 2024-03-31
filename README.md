@@ -13,5 +13,7 @@ Project based on my previous QA Forum project using Spring Boot as the server in
 
 ## Future Features
 
-- Storing encrypted password into the database
-- Persistent login
+(still learning how to implement these)
+
+- Storing encrypted password into the database instead of the plaintext password
+- Persistent login for a set amount of time
