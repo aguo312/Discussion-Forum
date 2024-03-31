@@ -27,4 +27,8 @@ public class UserService {
         }
         return null;
     }
+
+    public User getUserById(String id) {
+        return userRepository.findById(id).get();
+    }
 }
