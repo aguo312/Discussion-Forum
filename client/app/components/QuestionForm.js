@@ -2,12 +2,15 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
 
-const QuestionForm = (props) => {
+const QuestionForm = () => {
   const { user, setUser } = useContext(GlobalContext);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [text, setText] = useState("");
   const [tags, setTags] = useState("");
+  const [formatTags, setFormatTags] = useState([]);
+  const [existingTags, setExistingTags] = useState([]);
+  const [newTags, setNewTags] = useState([]);
 
   const [emptyTitle, setEmptyTitle] = useState(true);
   const [emptySummary, setEmptySummary] = useState(true);
@@ -18,14 +21,18 @@ const QuestionForm = (props) => {
   const [invalidReputation, setInvalidReputation] = useState(false);
   const [errorDetected, setErrorDetected] = useState(true);
 
-  useEffect(() => console.log(user), []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/tags")
+      .then((res) => setExistingTags(res.data));
+  }, []);
   useEffect(() => setEmptyTitle(title.length < 1), [title]);
   useEffect(() => setEmptySummary(summary.length < 1), [summary]);
   useEffect(() => setEmptyText(text.length < 1), [text]);
   useEffect(() => setEmptyTags(tags.length < 1), [tags]);
   useEffect(() => setInvalidTitle(title.length > 50), [title]);
   useEffect(() => setInvalidSummary(summary.length > 140), [summary]);
-  //   useEffect(() => setInvalidReputation())
+  // useEffect(() => setInvalidReputation()) // update with user's reputation later
   useEffect(
     () =>
       setErrorDetected(
@@ -47,6 +54,21 @@ const QuestionForm = (props) => {
       invalidReputation,
     ]
   );
+  useEffect(() => {
+    setFormatTags(
+      Array.from(
+        new Set(
+          tags
+            .toLowerCase()
+            .split(" ")
+            .filter((s) => s !== "")
+        )
+      )
+    );
+  }, [tags]);
+  useEffect(() => {
+    setNewTags(formatTags.filter((s) => !existingTags.includes(s)));
+  }, [formatTags]);
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleSummaryChange = (e) => setSummary(e.target.value);
@@ -58,12 +80,39 @@ const QuestionForm = (props) => {
     let error = "Problems detected!\n";
     if (errorDetected) {
       if (emptyTitle) error += "Title field is empty.\n";
+      if (invalidTitle)
+        error += "Title field cannot be more than 50 characters.\n";
       if (emptySummary) error += "Summary field is empty.\n";
+      if (invalidSummary)
+        error += "Sumamry field cannot be more than 140 characters.\n";
       if (emptyText) error += "Text field is empty.\n";
       if (emptyTags) error += "Tags field is empty.\n";
+      if (invalidReputation && formatTags.length > 0)
+        error += "100 reputation required to create new tags.\n";
       alert(error);
     } else {
-      // axios.
+      axios
+        .post("http://localhost:8080/tags", [user.id].concat(newTags))
+        .then((res) => {
+          axios.get("http://localhost:8080/tags").then((res1) => {
+            // console.log(res1.data);
+            // console.log(formatTags);
+            const tagIds = formatTags.map((tagName) => {
+              return res1.data.find((tagObject) => {
+                return tagObject.name == tagName;
+              }).id;
+            });
+            console.log([title, summary, text, user.id].concat(tagIds));
+            axios
+              .post(
+                "http://localhost:8080/question",
+                [title, summary, text, user.id].concat(tagIds)
+              )
+              .then((res2) => {
+                console.log(res2.data);
+              });
+          });
+        });
     }
   };
 
@@ -91,7 +140,7 @@ const QuestionForm = (props) => {
         <textarea onChange={handleTagsChange}></textarea>
         <br />
         <br />
-        <button onChange={handleClickPost}>Post Question</button>
+        <button onClick={handleClickPost}>Post Question</button>
       </form>
     </>
   );

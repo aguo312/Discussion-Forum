@@ -21,18 +21,16 @@ public class Question {
     private List<Answer> answers;
     @DBRef
     private List<Comment> comments;
-    private String askedBy;
     private LocalDateTime askDateTime;
     private int views;
     @DBRef
     private User owner;
 
-    public Question(String title, String summary, String text, List<Tag> tags, String askedBy, User owner) {
+    public Question(String title, String summary, String text, List<Tag> tags, User owner) {
         this.title = title;
         this.summary = summary;
         this.text = text;
         this.tags = tags;
-        this.askedBy = askedBy;
         this.askDateTime = LocalDateTime.now();
         this.views = 0;
         this.owner = owner;
@@ -92,14 +90,6 @@ public class Question {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
-    }
-
-    public String getAskedBy() {
-        return askedBy;
-    }
-
-    public void setAskedBy(String askedBy) {
-        this.askedBy = askedBy;
     }
 
     public LocalDateTime getAskDateTime() {

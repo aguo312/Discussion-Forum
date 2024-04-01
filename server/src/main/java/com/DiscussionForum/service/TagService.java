@@ -24,4 +24,8 @@ public class TagService {
             tagRepository.save(new Tag(s, user));
         }
     }
+
+    public List<Tag> getTagsByIds(String[] ids) {
+        return tagRepository.findByIds(ids);
+    }
 }

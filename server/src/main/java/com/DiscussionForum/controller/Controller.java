@@ -1,5 +1,6 @@
 package com.DiscussionForum.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DiscussionForum.model.Question;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
 import com.DiscussionForum.service.AnswerService;
@@ -66,7 +68,17 @@ public class Controller {
 
     @PostMapping("/tags")
     public void addTags(@RequestBody String[] info) {
-        User user = userService.getUserById(info[0]);
-        tagService.newTags(user, Arrays.copyOfRange(info, 1, info.length));
+        tagService.newTags(userService.getUserById(info[0]), Arrays.copyOfRange(info, 1, info.length));
+    }
+
+    @PostMapping("/question")
+    public void addQuestion(@RequestBody String[] info) {
+        questionService.newQuestion(info[0], info[1], info[2],
+                tagService.getTagsByIds(Arrays.copyOfRange(info, 4, info.length)), userService.getUserById(info[3]));
+    }
+
+    @GetMapping("/question")
+    public List<Question> allQuestions() {
+        return questionService.getAll();
     }
 }
