@@ -43,7 +43,7 @@ const Banner = () => {
       <button onClick={handleClickTags}>Tags</button>
       <button onClick={handleClickProfile}>Profile</button>
       <b>Discussion Forum</b>
-      <input type="text"></input>
+      <input id="search" type="text"></input>
       <button onClick={handleClickLogout}>Logout</button>
     </>
   );

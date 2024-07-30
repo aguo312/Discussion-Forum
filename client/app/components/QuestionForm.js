@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
 
 const QuestionForm = () => {
-  const { user, setUser } = useContext(GlobalContext);
+  const { user, setUser, setDataTable, setAskQuestion } =
+    useContext(GlobalContext);
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [text, setText] = useState("");
@@ -74,6 +75,10 @@ const QuestionForm = () => {
   const handleSummaryChange = (e) => setSummary(e.target.value);
   const handleTextChange = (e) => setText(e.target.value);
   const handleTagsChange = (e) => setTags(e.target.value);
+  const handlePostQuestionClick = () => {
+    setDataTable(true);
+    setAskQuestion(false);
+  };
 
   const handleClickPost = (e) => {
     e.preventDefault();
@@ -110,6 +115,7 @@ const QuestionForm = () => {
               )
               .then((res2) => {
                 console.log(res2.data);
+                handlePostQuestionClick();
               });
           });
         });
