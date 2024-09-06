@@ -1,6 +1,8 @@
 import TagTableRow from "./TagTableRow";
 
 const TagTable = () => {
+  const handleClickSearchByTag = (e) => {};
+
   return (
     <>
       <table>
@@ -14,7 +16,9 @@ const TagTable = () => {
           </tr>
         </thead>
         <tbody>
-          <TagTableRow></TagTableRow>
+          <TagTableRow
+            onSearchByTagClick={handleClickSearchByTag}
+          ></TagTableRow>
         </tbody>
       </table>
     </>
