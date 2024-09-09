@@ -20,8 +20,8 @@ const Banner = () => {
     setAskQuestion(false);
     setSearch({
       value: false,
-      tagSearch: search.tagSearch,
-      target: search.value,
+      tagSearch: false,
+      target: search.target,
     });
   };
   const handleClickTags = () => {
@@ -58,7 +58,7 @@ const Banner = () => {
       setAskQuestion(false);
       setSearch({
         value: true,
-        tagSearch: search.tagSearch,
+        tagSearch: false,
         target: search.target,
       });
     }

@@ -18,8 +18,10 @@ const DataTable = () => {
   };
 
   const rows = [];
+  const searchedQuestions = [];
   if (search.value) {
-    const searchedQuestions = [];
+    console.log(search);
+
     const searchTargets = search.target.toLowerCase().split(" ");
     questions.forEach((questionObj) => {
       const qTitle = questionObj.title.toLowerCase().split(" ");
@@ -68,8 +70,17 @@ const DataTable = () => {
       <table>
         <thead>
           <tr>
-            <th>{questions.length} Questions</th>
-            <th>All Questions</th>
+            <th>
+              {search.value ? searchedQuestions.length : questions.length}{" "}
+              Questions
+            </th>
+            <th>
+              {search.value
+                ? search.tagSearch
+                  ? "Questions tagged " + search.target
+                  : "Search Results"
+                : "All Questions"}
+            </th>
             <th>
               <button onClick={handleAskQuestionClick}>Ask A Question</button>
             </th>

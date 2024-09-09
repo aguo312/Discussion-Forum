@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../page";
 
-const TagTableRow = (props) => {
+const TagTableRow = () => {
   const [questions, setQuestions] = useState([]);
   const [tags, setTags] = useState([]);
   const [tagName, setTagName] = useState("");
+  const { setDataTable, setTagTable, setSearch } = useContext(GlobalContext);
 
   useEffect(() => {
     axios
@@ -20,7 +22,13 @@ const TagTableRow = (props) => {
     setTagName("[" + e.currentTarget.id + "]");
   };
   const handleClickSearchByTag = () => {
-    props.onSearchByTagClick(tagName);
+    setDataTable(true);
+    setTagTable(false);
+    setSearch({
+      value: true,
+      tagSearch: true,
+      target: tagName,
+    });
   };
 
   const tagTable = [];
