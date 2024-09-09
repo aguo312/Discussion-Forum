@@ -9,6 +9,8 @@ const Banner = () => {
     setTagTable,
     setProfile,
     setAskQuestion,
+    search,
+    setSearch,
   } = useContext(GlobalContext);
 
   const handleClickQuestions = () => {
@@ -16,6 +18,11 @@ const Banner = () => {
     setTagTable(false);
     setProfile(false);
     setAskQuestion(false);
+    setSearch({
+      value: false,
+      tagSearch: search.tagSearch,
+      target: search.value,
+    });
   };
   const handleClickTags = () => {
     setDataTable(false);
@@ -36,6 +43,26 @@ const Banner = () => {
     setProfile(false);
     setWelcome(true);
   };
+  const handleSearchTextChange = (e) => {
+    setSearch({
+      value: false,
+      tagSearch: search.tagSearch,
+      target: e.target.value,
+    });
+  };
+  const handleSearchTextEnter = (e) => {
+    if (e.keyCode === 13) {
+      setDataTable(true);
+      setTagTable(false);
+      setProfile(false);
+      setAskQuestion(false);
+      setSearch({
+        value: true,
+        tagSearch: search.tagSearch,
+        target: search.target,
+      });
+    }
+  };
 
   return (
     <>
@@ -43,7 +70,13 @@ const Banner = () => {
       <button onClick={handleClickTags}>Tags</button>
       <button onClick={handleClickProfile}>Profile</button>
       <b>Discussion Forum</b>
-      <input id="search" type="text"></input>
+      <input
+        id="search"
+        type="text"
+        placeholder="Type then press enter"
+        onChange={handleSearchTextChange}
+        onKeyUp={handleSearchTextEnter}
+      ></input>
       <button onClick={handleClickLogout}>Logout</button>
     </>
   );

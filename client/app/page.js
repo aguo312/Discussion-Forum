@@ -21,7 +21,11 @@ export default function Home() {
   const [tagTable, setTagTable] = useState(false);
   const [profile, setProfile] = useState(false);
   const [askQuestion, setAskQuestion] = useState(false);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState({
+    value: false,
+    tagSearch: false,
+    target: "",
+  });
 
   // useEffect(() => {
   //   if (login || register || banner) setWelcome(false);
@@ -61,6 +65,7 @@ export default function Home() {
         setTagTable,
         setProfile,
         setAskQuestion,
+        search,
         setSearch,
       }}
     >
