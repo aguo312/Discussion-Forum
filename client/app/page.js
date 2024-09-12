@@ -8,6 +8,7 @@ import DataTable from "./components/DataTable";
 import QuestionForm from "./components/QuestionForm";
 import TagTable from "./components/TagTable";
 import Profile from "./components/Profile";
+import QuestionTable from "./components/QuestionTable";
 
 export const GlobalContext = createContext();
 
@@ -26,6 +27,7 @@ export default function Home() {
     tagSearch: false,
     target: "",
   });
+  const [questionTable, setQuestionTable] = useState({ value: false, qid: "" });
 
   // useEffect(() => {
   //   if (login || register || banner) setWelcome(false);
@@ -67,6 +69,8 @@ export default function Home() {
         setAskQuestion,
         search,
         setSearch,
+        questionTable,
+        setQuestionTable,
       }}
     >
       {welcome && (
@@ -90,10 +94,11 @@ export default function Home() {
           showDataTable={setDataTable}
         ></RegisterForm>
       )}
-      {banner && <Banner showWelcome={setWelcome}></Banner>}
-      {dataTable && <DataTable showAskQuestion={setAskQuestion}></DataTable>}
+      {banner && <Banner></Banner>}
+      {dataTable && <DataTable></DataTable>}
       {tagTable && <TagTable></TagTable>}
       {profile && <Profile></Profile>}
+      {questionTable.value && <QuestionTable></QuestionTable>}
       {askQuestion && <QuestionForm></QuestionForm>}
     </GlobalContext.Provider>
   );

@@ -80,4 +80,10 @@ public class Controller {
     public List<Question> allQuestions() {
         return questionService.getAll();
     }
+
+    @GetMapping("/question/{qid}")
+    public List<Question> getQuestionById(@PathVariable String qid) {
+        // return questionService.getQuestionById(qid);
+        return questionService.getAll();
+    }
 }

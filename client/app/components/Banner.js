@@ -11,6 +11,7 @@ const Banner = () => {
     setAskQuestion,
     search,
     setSearch,
+    setQuestionTable,
   } = useContext(GlobalContext);
 
   const handleClickQuestions = () => {
@@ -23,18 +24,30 @@ const Banner = () => {
       tagSearch: false,
       target: search.target,
     });
+    setQuestionTable({
+      value: false,
+      qid: "",
+    });
   };
   const handleClickTags = () => {
     setDataTable(false);
     setTagTable(true);
     setProfile(false);
     setAskQuestion(false);
+    setQuestionTable({
+      value: false,
+      qid: "",
+    });
   };
   const handleClickProfile = () => {
     setDataTable(false);
     setTagTable(false);
     setProfile(true);
     setAskQuestion(false);
+    setQuestionTable({
+      value: false,
+      qid: "",
+    });
   };
   const handleClickLogout = () => {
     setBanner(false);
@@ -42,6 +55,10 @@ const Banner = () => {
     setTagTable(false);
     setProfile(false);
     setWelcome(true);
+    setQuestionTable({
+      value: false,
+      qid: "",
+    });
   };
   const handleSearchTextChange = (e) => {
     setSearch({

@@ -26,4 +26,8 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
+    public Question getQuestionById(String qid) {
+        return questionRepository.findById(qid).get();
+    }
+
 }
