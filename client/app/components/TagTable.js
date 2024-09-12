@@ -1,12 +1,19 @@
+import { useEffect, useState } from "react";
 import TagTableRow from "./TagTableRow";
+import axios from "axios";
 
 const TagTable = () => {
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:8080/tags").then((res) => setTags(res.data));
+  }, []);
+
   return (
     <>
       <table>
         <thead>
           <tr>
-            <th># Tags</th>
+            <th>{tags.length} Tags</th>
             <th>All Tags</th>
             <th>
               <button>Ask A Question</button>
@@ -14,7 +21,7 @@ const TagTable = () => {
           </tr>
         </thead>
         <tbody>
-          <TagTableRow></TagTableRow>
+          <TagTableRow tags={tags}></TagTableRow>
         </tbody>
       </table>
     </>

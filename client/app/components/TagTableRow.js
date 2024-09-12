@@ -2,9 +2,8 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
 
-const TagTableRow = () => {
+const TagTableRow = (props) => {
   const [questions, setQuestions] = useState([]);
-  const [tags, setTags] = useState([]);
   const [tagName, setTagName] = useState("");
   const { setDataTable, setTagTable, setSearch } = useContext(GlobalContext);
 
@@ -12,10 +11,6 @@ const TagTableRow = () => {
     axios
       .get("http://localhost:8080/question")
       .then((res) => setQuestions(res.data));
-  }, []);
-
-  useEffect(() => {
-    axios.get("http://localhost:8080/tags").then((res) => setTags(res.data));
   }, []);
 
   const handleSetTagName = (e) => {
@@ -32,10 +27,10 @@ const TagTableRow = () => {
   };
 
   const tagTable = [];
-  for (let i = 0; i < tags.length; i += 3) {
+  for (let i = 0; i < props.tags.length; i += 3) {
     tagTable.push(
       <tr key={i}>
-        {tags.slice(i, i + 3).map((tagObj) => {
+        {props.tags.slice(i, i + 3).map((tagObj) => {
           const numQuestions = questions.filter((questionObj) => {
             return questionObj.tags.some((questionObjTag) => {
               return questionObjTag.id == tagObj.id;
