@@ -1,3 +1,5 @@
+import DataTableRowTags from "./DataTableRowTags";
+
 const DataTableRow = (props) => {
   const localDate = new Date(props.question.askDateTime).toString();
   const askedOn =
@@ -10,10 +12,12 @@ const DataTableRow = (props) => {
         <td>
           {props.question.views} Views <br />
           {props.question.answers.length} Answers <br />
+          {"temp"} Votes <br />
         </td>
         <td>
-          {props.question.title}
+          <button>{props.question.title}</button>
           <div>{props.question.summary}</div>
+          <DataTableRowTags tags={props.question.tags}></DataTableRowTags>
         </td>
         <td>
           Asked By {props.question.owner.username}
