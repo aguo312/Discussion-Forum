@@ -26,6 +26,7 @@ public class Question {
     private int views;
     @DBRef
     private User owner;
+    private int votes;
 
     public Question(String title, String summary, String text, List<Tag> tags, User owner) {
         this.title = title;
@@ -37,6 +38,7 @@ public class Question {
         this.askDateTime = LocalDateTime.now();
         this.views = 0;
         this.owner = owner;
+        this.votes = 0;
     }
 
     public String getId() {
@@ -117,6 +119,14 @@ public class Question {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 
 }

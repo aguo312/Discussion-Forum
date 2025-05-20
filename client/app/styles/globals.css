@@ -11,6 +11,18 @@ td {
   padding: 12px 16px;
 }
 
+td:first-child {
+  width: 20%;
+}
+
+td:nth-child(2) {
+  width: 60%;
+}
+
+td:nth-child(3) {
+  width: 20%;
+}
+
 .banner {
   display: flex;
   align-items: center;

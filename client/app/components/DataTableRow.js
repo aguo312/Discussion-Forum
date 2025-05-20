@@ -20,7 +20,7 @@ const DataTableRow = (props) => {
         <td>
           {props.question.views} Views <br />
           {props.question.answers.length} Answers <br />
-          {"temp"} Votes <br />
+          {props.question.votes} Votes <br />
         </td>
         <td>
           <button onClick={handleClickQuestionTable}>
