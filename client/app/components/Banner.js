@@ -83,18 +83,24 @@ const Banner = () => {
 
   return (
     <>
-      <button onClick={handleClickQuestions}>Questions</button>
-      <button onClick={handleClickTags}>Tags</button>
-      <button onClick={handleClickProfile}>Profile</button>
-      <b>Discussion Forum</b>
-      <input
-        id="search"
-        type="text"
-        placeholder="Type then press enter"
-        onChange={handleSearchTextChange}
-        onKeyUp={handleSearchTextEnter}
-      ></input>
-      <button onClick={handleClickLogout}>Logout</button>
+      <header className="banner">
+        <div className="bannerLeft">
+          <button onClick={handleClickQuestions}>Questions</button>
+          <button onClick={handleClickTags}>Tags</button>
+          <button onClick={handleClickProfile}>Profile</button>
+        </div>
+        <h1 className="bannerTitle">Discussion Forum</h1>
+        <div className="bannerRight">
+          <input
+            id="search"
+            type="text"
+            placeholder="Type then press enter"
+            onChange={handleSearchTextChange}
+            onKeyUp={handleSearchTextEnter}
+          ></input>
+          <button onClick={handleClickLogout}>Logout</button>
+        </div>
+      </header>
     </>
   );
 };

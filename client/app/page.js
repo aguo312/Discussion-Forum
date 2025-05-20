@@ -9,6 +9,7 @@ import QuestionForm from "./components/QuestionForm";
 import TagTable from "./components/TagTable";
 import Profile from "./components/Profile";
 import QuestionTable from "./components/QuestionTable";
+import "./styles/globals.css";
 
 export const GlobalContext = createContext();
 

@@ -82,8 +82,7 @@ public class Controller {
     }
 
     @GetMapping("/question/{qid}")
-    public List<Question> getQuestionById(@PathVariable String qid) {
-        // return questionService.getQuestionById(qid);
-        return questionService.getAll();
+    public Question getQuestionById(@PathVariable String qid) {
+        return questionService.getQuestionById(qid);
     }
 }
