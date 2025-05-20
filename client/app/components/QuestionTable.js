@@ -34,7 +34,7 @@ const QuestionTable = () => {
               <br />
               {question.views} Views
               <br />
-              temp Votes
+              {question.votes} Votes
             </th>
           </tr>
         </thead>

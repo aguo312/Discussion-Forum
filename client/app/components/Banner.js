@@ -78,6 +78,7 @@ const Banner = () => {
         tagSearch: false,
         target: search.target,
       });
+      setQuestionTable(false);
     }
   };
 
