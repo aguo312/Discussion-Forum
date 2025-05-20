@@ -12,6 +12,7 @@ const Banner = () => {
     search,
     setSearch,
     setQuestionTable,
+    setAnswerQuestion,
   } = useContext(GlobalContext);
 
   const handleClickQuestions = () => {
@@ -28,6 +29,10 @@ const Banner = () => {
       value: false,
       qid: "",
     });
+    setAnswerQuestion({
+      value: false,
+      qid: "",
+    });
   };
   const handleClickTags = () => {
     setDataTable(false);
@@ -35,6 +40,10 @@ const Banner = () => {
     setProfile(false);
     setAskQuestion(false);
     setQuestionTable({
+      value: false,
+      qid: "",
+    });
+    setAnswerQuestion({
       value: false,
       qid: "",
     });
@@ -48,6 +57,10 @@ const Banner = () => {
       value: false,
       qid: "",
     });
+    setAnswerQuestion({
+      value: false,
+      qid: "",
+    });
   };
   const handleClickLogout = () => {
     setBanner(false);
@@ -56,6 +69,10 @@ const Banner = () => {
     setProfile(false);
     setWelcome(true);
     setQuestionTable({
+      value: false,
+      qid: "",
+    });
+    setAnswerQuestion({
       value: false,
       qid: "",
     });
@@ -79,6 +96,10 @@ const Banner = () => {
         target: search.target,
       });
       setQuestionTable(false);
+      setAnswerQuestion({
+        value: false,
+        qid: "",
+      });
     }
   };
 

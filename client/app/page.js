@@ -10,6 +10,7 @@ import TagTable from "./components/TagTable";
 import Profile from "./components/Profile";
 import QuestionTable from "./components/QuestionTable";
 import "./styles/globals.css";
+import AnswerForm from "./components/AnswerForm";
 
 export const GlobalContext = createContext();
 
@@ -29,6 +30,10 @@ export default function Home() {
     target: "",
   });
   const [questionTable, setQuestionTable] = useState({ value: false, qid: "" });
+  const [answerQuestion, setAnswerQuestion] = useState({
+    value: false,
+    qid: "",
+  });
 
   // useEffect(() => {
   //   if (login || register || banner) setWelcome(false);
@@ -72,6 +77,8 @@ export default function Home() {
         setSearch,
         questionTable,
         setQuestionTable,
+        answerQuestion,
+        setAnswerQuestion,
       }}
     >
       {welcome && (
@@ -101,6 +108,7 @@ export default function Home() {
       {profile && <Profile></Profile>}
       {questionTable.value && <QuestionTable></QuestionTable>}
       {askQuestion && <QuestionForm></QuestionForm>}
+      {answerQuestion.value && <AnswerForm></AnswerForm>}
     </GlobalContext.Provider>
   );
 }

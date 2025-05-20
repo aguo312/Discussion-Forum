@@ -4,7 +4,8 @@ import { GlobalContext } from "../page";
 import DataTableRowTags from "./DataTableRowTags";
 
 const QuestionTable = () => {
-  const { questionTable } = useContext(GlobalContext);
+  const { questionTable, setQuestionTable, setAnswerQuestion } =
+    useContext(GlobalContext);
   const [question, setQuestion] = useState({
     answers: [],
     owner: { username: "" },
@@ -16,6 +17,11 @@ const QuestionTable = () => {
       .get("http://localhost:8080/question/" + questionTable.qid)
       .then((res) => setQuestion(res.data));
   }, []);
+
+  const handleAnswerQuestionClick = () => {
+    setQuestionTable(false);
+    setAnswerQuestion({ value: true, qid: questionTable.qid });
+  };
 
   const localDate = new Date(question.askDateTime).toString();
   const askedOn =
@@ -58,7 +64,9 @@ const QuestionTable = () => {
           {"Answers"} */}
         </tbody>
       </table>
-      <button>Answer Question Button Toggle</button>
+      <button onClick={handleAnswerQuestionClick}>
+        Answer Question Button Toggle
+      </button>
     </>
   );
 };
