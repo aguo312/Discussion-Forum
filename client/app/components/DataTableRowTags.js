@@ -4,17 +4,12 @@ const DataTableRowTags = (props) => {
     rows.push(
       <div key={i}>
         {props.tags.slice(i, i + 4).map((tagObj) => {
-          return tagObj.name + " ";
+          return <div key={tagObj.id}>{tagObj.name}</div>;
         })}
       </div>
     );
   }
-  return (
-    <>
-      {"(Remove title after formatting) Tags: "}
-      {rows}
-    </>
-  );
+  return <div className="tableTag">{rows}</div>;
 };
 
 export default DataTableRowTags;

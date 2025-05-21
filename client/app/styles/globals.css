@@ -46,3 +46,18 @@ td:nth-child(3) {
   font-size: 1.5rem;
   pointer-events: none;
 }
+
+.tableTag {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tableTag div div {
+  display: inline-flex;
+  padding: 3px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  border: 2px solid black;
+  margin-right: 2px;
+}
