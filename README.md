@@ -19,10 +19,9 @@ On a command line, go to the client directory and use the command `npm run dev`
 
 ## Current Goals
 
-- Posting an answer to a question
 - Posting a comment to a question or answer
-- Edit a question's text
 - Profile page of posts and comments
+- Edit a question's text
 
 ## Future Features
 
