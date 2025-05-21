@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Question;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
@@ -28,6 +29,12 @@ public class QuestionService {
 
     public Question getQuestionById(String qid) {
         return questionRepository.findById(qid).get();
+    }
+
+    public void updateQuestionAnswerById(String qid, Answer ans) {
+        Question ques = questionRepository.findById(qid).get();
+        ques.getAnswers().add(ans);
+        questionRepository.save(ques);
     }
 
 }

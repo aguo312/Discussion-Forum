@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Question;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
@@ -85,4 +86,12 @@ public class Controller {
     public Question getQuestionById(@PathVariable String qid) {
         return questionService.getQuestionById(qid);
     }
+
+    @PostMapping("/answer")
+    public void addAnswer(@RequestBody String[] info) {
+        Answer ans = answerService.newAnswer(info[0], userService.getUserById(info[1]));
+        questionService.updateQuestionAnswerById(info[2], ans);
+        return;
+    }
 }
+
