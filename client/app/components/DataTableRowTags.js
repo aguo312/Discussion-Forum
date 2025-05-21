@@ -11,7 +11,7 @@ const DataTableRowTags = (props) => {
   }
   return (
     <>
-      {"Tags: "}
+      {"(Remove title after formatting) Tags: "}
       {rows}
     </>
   );

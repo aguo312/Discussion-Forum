@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
 import DataTableRowTags from "./DataTableRowTags";
+import QuestionTableRow from "./QuestionTableRow";
 
 const QuestionTable = () => {
   const { questionTable, setQuestionTable, setAnswerQuestion } =
@@ -27,6 +28,16 @@ const QuestionTable = () => {
   const askedOn =
     localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
   const askedAt = localDate.substring(16, 21);
+
+  const rows = [];
+  question.answers.forEach((answerObj) => {
+    rows.unshift(
+      <QuestionTableRow
+        key={answerObj.id}
+        answer={answerObj}
+      ></QuestionTableRow>
+    );
+  });
 
   return (
     <>
@@ -60,8 +71,8 @@ const QuestionTable = () => {
               At {askedAt}
             </td>
           </tr>
-          {/* <div>Comments</div>
-          {"Answers"} */}
+          {/* <div>Comments</div> */}
+          Answers ({rows.length}){rows}
         </tbody>
       </table>
       <button onClick={handleAnswerQuestionClick}>
