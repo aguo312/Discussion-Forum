@@ -1,21 +1,44 @@
+import { useEffect, useState } from "react";
+import CommentTable from "./CommentTable";
+import axios from "axios";
+
 const QuestionTableRow = (props) => {
-  const localDate = new Date(props.answer.ansDateTime).toString();
+  const [answer, setAnswer] = useState({});
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/answer/" + props.aid)
+      .then((res) => setAnswer(res.data));
+  }, []);
+
+  const handleEnterComment = () => {
+    axios
+      .get("http://localhost:8080/answer/" + props.aid)
+      .then((res) => setAnswer(res.data));
+  };
+
+  const localDate = new Date(answer.ansDateTime).toString();
   const askedOn =
     localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
   const askedAt = localDate.substring(16, 21);
 
   return (
     <>
-      <tr key={props.answer.id}>
+      <tr key={answer.id}>
         <td>Votes</td>
-        <td>{props.answer.text}</td>
+        <td>{answer.text}</td>
         <td>
-          Ans By {props.answer.ansBy}
+          Ans By {answer.ansBy}
           <br /> On {askedOn}
           <br /> At {askedAt}
           <br />
         </td>
       </tr>
+      <CommentTable
+        data={answer}
+        dataType="answer"
+        onCommentUpdate={handleEnterComment}
+      ></CommentTable>
     </>
   );
 };

@@ -1,6 +1,7 @@
 package com.DiscussionForum.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -22,6 +23,7 @@ public class Answer {
 
     public Answer(String text, String ansBy, User owner) {
         this.text = text;
+        this.comments = new ArrayList<>();
         this.ansBy = ansBy;
         this.ansDateTime = LocalDateTime.now();
         this.owner = owner;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.DiscussionForum.model.Answer;
+import com.DiscussionForum.model.Comment;
 import com.DiscussionForum.model.Question;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
@@ -34,6 +35,12 @@ public class QuestionService {
     public void updateQuestionAnswerById(String qid, Answer ans) {
         Question ques = questionRepository.findById(qid).get();
         ques.getAnswers().add(ans);
+        questionRepository.save(ques);
+    }
+
+    public void updateQuestionCommentById(String qid, Comment com) {
+        Question ques = questionRepository.findById(qid).get();
+        ques.getComments().add(com);
         questionRepository.save(ques);
     }
 

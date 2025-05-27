@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.DiscussionForum.model.Answer;
+import com.DiscussionForum.model.Comment;
 import com.DiscussionForum.model.Question;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
@@ -91,7 +92,26 @@ public class Controller {
     public void addAnswer(@RequestBody String[] info) {
         Answer ans = answerService.newAnswer(info[0], userService.getUserById(info[1]));
         questionService.updateQuestionAnswerById(info[2], ans);
-        return;
+    }
+
+    @GetMapping("/answer/{aid}")
+    public Answer getAnswerById(@PathVariable String aid) {
+        return answerService.getAnswerById(aid);
+    }
+
+    @PostMapping("/comment")
+    public void addComment(@RequestBody String[] info) {
+        Comment com = commentService.newComment(info[0], userService.getUserById(info[1]));
+        if (info[2].equals("question")) {
+            questionService.updateQuestionCommentById(info[3], com);
+        } else if (info[2].equals("answer")) {
+            answerService.updateAnswerCommentById(info[3], com);
+        }
+    }
+
+    @GetMapping("/comment/{cid}")
+    public Comment getCommentById(@PathVariable String cid) {
+        return commentService.getCommentById(cid);
     }
 }
 

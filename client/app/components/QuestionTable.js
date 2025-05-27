@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
 import DataTableRowTags from "./DataTableRowTags";
 import QuestionTableRow from "./QuestionTableRow";
+import CommentTable from "./CommentTable";
 
 const QuestionTable = () => {
   const { questionTable, setQuestionTable, setAnswerQuestion } =
@@ -24,6 +25,12 @@ const QuestionTable = () => {
     setAnswerQuestion({ value: true, qid: questionTable.qid });
   };
 
+  const handleEnterComment = () => {
+    axios
+      .get("http://localhost:8080/question/" + questionTable.qid)
+      .then((res) => setQuestion(res.data));
+  };
+
   const localDate = new Date(question.askDateTime).toString();
   const askedOn =
     localDate.substring(4, 10) + ", " + localDate.substring(11, 15);
@@ -34,7 +41,7 @@ const QuestionTable = () => {
     rows.unshift(
       <QuestionTableRow
         key={answerObj.id}
-        answer={answerObj}
+        aid={answerObj.id}
       ></QuestionTableRow>
     );
   });
@@ -71,9 +78,16 @@ const QuestionTable = () => {
               At {askedAt}
             </td>
           </tr>
-          {/* <div>Comments</div> */}
-          Answers ({rows.length}){rows}
+          <CommentTable
+            data={question}
+            dataType="question"
+            onCommentUpdate={handleEnterComment}
+          ></CommentTable>
         </tbody>
+      </table>
+      Answers ({rows.length})
+      <table>
+        <tbody>{rows}</tbody>
       </table>
       <button onClick={handleAnswerQuestionClick}>
         Answer Question Button Toggle
