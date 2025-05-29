@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Comment;
 import com.DiscussionForum.model.Question;
-import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
 import com.DiscussionForum.repository.QuestionRepository;
 
