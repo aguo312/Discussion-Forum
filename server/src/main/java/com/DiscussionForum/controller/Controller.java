@@ -75,7 +75,7 @@ public class Controller {
     @PostMapping("/question")
     public void addQuestion(@RequestBody String[] info) {
         questionService.newQuestion(info[0], info[1], info[2],
-                tagService.getTagsByIds(Arrays.copyOfRange(info, 4, info.length)), userService.getUserById(info[3]));
+                Arrays.asList(Arrays.copyOfRange(info, 4, info.length)), userService.getUserById(info[3]));
     }
 
     @GetMapping("/question")
@@ -114,4 +114,3 @@ public class Controller {
         return commentService.getCommentById(cid);
     }
 }
-

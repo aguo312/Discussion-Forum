@@ -15,7 +15,7 @@ public class AnswerService {
     AnswerRepository answerRepository;
 
     public Answer newAnswer(String text, User user) {
-        return answerRepository.save(new Answer(text, user.getUsername(), user));
+        return answerRepository.save(new Answer(text, user.getUsername(), user.getId()));
     }
 
     public Answer getAnswerById(String aid) {
@@ -24,7 +24,7 @@ public class AnswerService {
 
     public void updateAnswerCommentById(String aid, Comment com) {
         Answer ans = answerRepository.findById(aid).get();
-        ans.getComments().add(com);
+        ans.getComments().add(com.getId());
         answerRepository.save(ans);
     }
 }

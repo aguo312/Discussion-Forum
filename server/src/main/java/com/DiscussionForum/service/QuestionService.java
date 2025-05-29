@@ -20,8 +20,8 @@ public class QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
-    public void newQuestion(String title, String summary, String text, List<Tag> tags, User user) {
-        questionRepository.save(new Question(title, summary, text, tags, user));
+    public void newQuestion(String title, String summary, String text, List<String> tags, User user) {
+        questionRepository.save(new Question(title, summary, text, tags, user.getId()));
     }
 
     public List<Question> getAll() {
@@ -34,13 +34,13 @@ public class QuestionService {
 
     public void updateQuestionAnswerById(String qid, Answer ans) {
         Question ques = questionRepository.findById(qid).get();
-        ques.getAnswers().add(ans);
+        ques.getAnswers().add(ans.getId());
         questionRepository.save(ques);
     }
 
     public void updateQuestionCommentById(String qid, Comment com) {
         Question ques = questionRepository.findById(qid).get();
-        ques.getComments().add(com);
+        ques.getComments().add(com.getId());
         questionRepository.save(ques);
     }
 

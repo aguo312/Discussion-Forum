@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Answers")
@@ -14,14 +13,12 @@ public class Answer {
     @Id
     private String id;
     private String text;
-    @DBRef
-    private List<Comment> comments;
+    private List<String> comments;
     private String ansBy;
     private LocalDateTime ansDateTime;
-    @DBRef
-    private User owner;
+    private String owner;
 
-    public Answer(String text, String ansBy, User owner) {
+    public Answer(String text, String ansBy, String owner) {
         this.text = text;
         this.comments = new ArrayList<>();
         this.ansBy = ansBy;
@@ -45,11 +42,11 @@ public class Answer {
         this.text = text;
     }
 
-    public List<Comment> getComments() {
+    public List<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<String> comments) {
         this.comments = comments;
     }
 
@@ -69,11 +66,11 @@ public class Answer {
         this.ansDateTime = ansDateTime;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 }

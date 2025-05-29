@@ -3,7 +3,6 @@ package com.DiscussionForum.model;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Comments")
@@ -14,10 +13,9 @@ public class Comment {
     private String text;
     private String commentBy;
     private LocalDateTime commentDateTime;
-    @DBRef
-    private User owner;
+    private String owner;
 
-    public Comment(String text, String commentBy, User owner) {
+    public Comment(String text, String commentBy, String owner) {
         this.text = text;
         this.commentBy = commentBy;
         this.commentDateTime = LocalDateTime.now();
@@ -56,11 +54,11 @@ public class Comment {
         this.commentDateTime = commentDateTime;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 

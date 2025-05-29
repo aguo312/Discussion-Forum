@@ -21,7 +21,7 @@ public class TagService {
 
     public void newTags(User user, String[] newTags) {
         for (String s : newTags) {
-            tagRepository.save(new Tag(s, user));
+            tagRepository.save(new Tag(s, user.getId()));
         }
     }
 

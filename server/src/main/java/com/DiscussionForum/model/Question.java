@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Questions")
@@ -16,19 +15,15 @@ public class Question {
     private String title;
     private String summary;
     private String text;
-    @DBRef
-    private List<Tag> tags;
-    @DBRef
-    private List<Answer> answers;
-    @DBRef
-    private List<Comment> comments;
+    private List<String> tags;
+    private List<String> answers;
+    private List<String> comments;
     private LocalDateTime askDateTime;
     private int views;
-    @DBRef
-    private User owner;
+    private String owner;
     private int votes;
 
-    public Question(String title, String summary, String text, List<Tag> tags, User owner) {
+    public Question(String title, String summary, String text, List<String> tags, String owner) {
         this.title = title;
         this.summary = summary;
         this.text = text;
@@ -73,27 +68,27 @@ public class Question {
         this.text = text;
     }
 
-    public List<Tag> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
-    public List<Answer> getAnswers() {
+    public List<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(List<String> answers) {
         this.answers = answers;
     }
 
-    public List<Comment> getComments() {
+    public List<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<String> comments) {
         this.comments = comments;
     }
 
@@ -113,11 +108,11 @@ public class Question {
         this.views = views;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
