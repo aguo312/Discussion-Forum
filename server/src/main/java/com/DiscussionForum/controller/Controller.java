@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.DiscussionForum.dto.QuestionWithTagDto;
 import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Comment;
-import com.DiscussionForum.model.Question;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
 import com.DiscussionForum.service.AnswerService;

@@ -38,13 +38,8 @@ const QuestionTable = () => {
   const askedAt = localDate.substring(16, 21);
 
   const rows = [];
-  question.answers.forEach((answerObj) => {
-    rows.unshift(
-      <QuestionTableRow
-        key={answerObj.id}
-        aid={answerObj.id}
-      ></QuestionTableRow>
-    );
+  question.answers.forEach((aid) => {
+    rows.unshift(<QuestionTableRow key={aid} aid={aid}></QuestionTableRow>);
   });
 
   return (
