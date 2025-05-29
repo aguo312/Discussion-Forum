@@ -14,7 +14,7 @@ public class CommentService {
     CommentRepository commentRepository;
 
     public Comment newComment(String text, User user) {
-        return commentRepository.save(new Comment(text, text, user.getId()));
+        return commentRepository.save(new Comment(text, user.getUsername(), user.getId()));
     }
 
     public Comment getCommentById(String cid) {

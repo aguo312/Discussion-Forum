@@ -10,6 +10,7 @@ const QuestionTable = () => {
     useContext(GlobalContext);
   const [question, setQuestion] = useState({
     answers: [],
+    comments: [],
     owner: { username: "" },
     tags: [],
   });
@@ -79,6 +80,7 @@ const QuestionTable = () => {
             </td>
           </tr>
           <CommentTable
+            key={question.comments.length}
             data={question}
             dataType="question"
             onCommentUpdate={handleEnterComment}

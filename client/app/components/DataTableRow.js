@@ -27,7 +27,10 @@ const DataTableRow = (props) => {
             {props.question.title}
           </button>
           <div>{props.question.summary}</div>
-          <DataTableRowTags tags={props.question.tags}></DataTableRowTags>
+          <DataTableRowTags
+            key={props.question.tags.length}
+            tags={props.question.tags}
+          ></DataTableRowTags>
         </td>
         <td>
           Asked By {props.question.owner.username}

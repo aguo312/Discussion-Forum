@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DiscussionForum.dto.QuestionWithTagDto;
 import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Comment;
 import com.DiscussionForum.model.Question;
@@ -75,17 +76,17 @@ public class Controller {
     @PostMapping("/question")
     public void addQuestion(@RequestBody String[] info) {
         questionService.newQuestion(info[0], info[1], info[2],
-                Arrays.asList(Arrays.copyOfRange(info, 4, info.length)), userService.getUserById(info[3]));
+                Arrays.asList(Arrays.copyOfRange(info, 4, info.length)), info[3]);
     }
 
     @GetMapping("/question")
-    public List<Question> allQuestions() {
-        return questionService.getAll();
+    public List<QuestionWithTagDto> allQuestions() {
+        return questionService.getAllWithTags();
     }
 
     @GetMapping("/question/{qid}")
-    public Question getQuestionById(@PathVariable String qid) {
-        return questionService.getQuestionById(qid);
+    public QuestionWithTagDto getQuestionById(@PathVariable String qid) {
+        return questionService.getQuestionWithTagsById(qid);
     }
 
     @PostMapping("/answer")

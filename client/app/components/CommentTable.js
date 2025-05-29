@@ -43,13 +43,8 @@ const CommentTable = (props) => {
 
   const rows = [];
   if (props.data.comments) {
-    Array.from(props.data.comments).forEach((commentObj) => {
-      rows.unshift(
-        <CommentTableRow
-          key={commentObj.id}
-          cid={commentObj.id}
-        ></CommentTableRow>
-      );
+    Array.from(props.data.comments).forEach((cid) => {
+      rows.unshift(<CommentTableRow key={cid} cid={cid}></CommentTableRow>);
     });
   }
 
