@@ -104,18 +104,31 @@ const RegisterForm = () => {
       }
       alert(error);
     } else {
-      axios.get("http://localhost:8080/user/" + email).then((res) => {
-        if (res.data) {
-          error += "Email is already used by another user.\n";
+      // axios.get("http://localhost:8080/user/" + email).then((res) => {
+      //   if (res.data) {
+      //     error += "Email is already used by another user.\n";
+      //     alert(error);
+      //   } else {
+      //     axios
+      //       .post("http://localhost:8080/register", [username, email, password])
+      //       .then((res) => {
+      //         handleRegister(res.data);
+      //       });
+      //   }
+      // });
+      axios
+        .post("http://localhost:8080/register", [username, email, password])
+        .then((res) => {
+          handleRegister(res.data);
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 409) {
+            error += err.response.data;
+          } else {
+            error += "Registration Failed. Please try again.\n";
+          }
           alert(error);
-        } else {
-          axios
-            .post("http://localhost:8080/register", [username, email, password])
-            .then((res) => {
-              handleRegister(res.data);
-            });
-        }
-      });
+        });
     }
   };
 

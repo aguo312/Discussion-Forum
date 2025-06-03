@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.DiscussionForum.dto.UserDTO;
+import com.DiscussionForum.exception.EmailAlreadyUsedException;
 import com.DiscussionForum.model.User;
 import com.DiscussionForum.repository.UserRepository;
 
@@ -29,8 +31,12 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User newUser(String username, String email, String password) {
-        return userRepository.save(new User(username, email, passwordEncoder.encode(password)));
+    public UserDTO newUser(String username, String email, String password) {
+        if (userRepository.findByEmail(email) != null) {
+            throw new EmailAlreadyUsedException("Email is already used by another user.\n");
+        }
+        User newUser = userRepository.save(new User(username, email, passwordEncoder.encode(password)));
+        return new UserDTO(newUser.getId(), newUser.getUsername(), newUser.getEmail(), newUser.getReputation());
     }
 
     public User verifyPassword(String email, String password) {

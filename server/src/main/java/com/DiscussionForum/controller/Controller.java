@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.DiscussionForum.dto.QuestionWithTagDto;
+import com.DiscussionForum.dto.UserDTO;
+import com.DiscussionForum.exception.EmailAlreadyUsedException;
 import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Comment;
 import com.DiscussionForum.model.Tag;
@@ -53,8 +57,13 @@ public class Controller {
     }
 
     @PostMapping("/register")
-    public User addUser(@RequestBody String[] info) {
-        return userService.newUser(info[0], info[1], info[2]);
+    public ResponseEntity<?> addUser(@RequestBody String[] info) {
+        try {
+            UserDTO newUser = userService.newUser(info[0], info[1], info[2]);
+            return ResponseEntity.ok(newUser);
+        } catch (EmailAlreadyUsedException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
