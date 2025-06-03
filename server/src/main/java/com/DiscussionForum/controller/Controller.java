@@ -58,8 +58,9 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public User checkUser(@RequestBody String[] info) {
-        return userService.verifyPassword(info[0], info[1]);
+    public String checkUser(@RequestBody String[] info) {
+        // return userService.verifyPassword(info[0], info[1]);
+        return userService.verify(info[0], info[1]);
     }
 
     @GetMapping("/tags")
