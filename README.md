@@ -21,10 +21,11 @@ On a command line, go to the client directory and use the command `npm run dev`
 
 - Profile page of posts and comments
 - Edit a question's text
+- Return to Datatable on refresh instead of login screen
+- Fix logout
+- Fix Question being called twice at data table
+- Resolvetoken method for conditional rendering the start page depending on if you are logged in
 
 ## Future Features
 
-(still learning how to implement these)
-
-- Storing encrypted password into the database instead of the plaintext password
 - Persistent login for a set amount of time
