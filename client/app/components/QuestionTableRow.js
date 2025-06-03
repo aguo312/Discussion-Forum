@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import CommentTable from "./CommentTable";
-import axios from "axios";
+import api from "../api/api";
 
 const QuestionTableRow = (props) => {
   const [answer, setAnswer] = useState({});
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/answer/" + props.aid)
-      .then((res) => setAnswer(res.data));
+    api.get("/answer/" + props.aid).then((res) => setAnswer(res.data));
   }, []);
 
   const handleEnterComment = () => {
-    axios
-      .get("http://localhost:8080/answer/" + props.aid)
-      .then((res) => setAnswer(res.data));
+    api.get("/answer/" + props.aid).then((res) => setAnswer(res.data));
   };
 
   const localDate = new Date(answer.ansDateTime).toString();

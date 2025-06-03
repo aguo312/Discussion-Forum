@@ -1,15 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
-import axios from "axios";
 import DataTableRow from "./DataTableRow";
+import api from "../api/api";
 
 const DataTable = () => {
   const { setDataTable, setAskQuestion, search } = useContext(GlobalContext);
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/question")
-      .then((res) => setQuestions(res.data));
+    api.get("/question").then((res) => setQuestions(res.data));
   }, []);
 
   const handleAskQuestionClick = () => {

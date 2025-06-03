@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const LoginForm = () => {
   const { setUser, setWelcome, setLogin, setBanner, setDataTable } =
@@ -45,8 +45,8 @@ const LoginForm = () => {
       //       });
       //   }
       // });
-      axios
-        .post("http://localhost:8080/login", [email, password])
+      api
+        .post("/login", [email, password])
         .then((res) => {
           const token = res.data.token;
           handleLogin(res.data);

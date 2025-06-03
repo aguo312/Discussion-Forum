@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const QuestionForm = () => {
   const { user, setUser, setDataTable, setAskQuestion } =
@@ -23,9 +23,7 @@ const QuestionForm = () => {
   const [errorDetected, setErrorDetected] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/tags")
-      .then((res) => setExistingTags(res.data));
+    api.get("/tags").then((res) => setExistingTags(res.data));
   }, []);
   useEffect(() => setEmptyTitle(title.length < 1), [title]);
   useEffect(() => setEmptySummary(summary.length < 1), [summary]);
@@ -96,29 +94,24 @@ const QuestionForm = () => {
         error += "100 reputation required to create new tags.\n";
       alert(error);
     } else {
-      axios
-        .post("http://localhost:8080/tags", [user.id].concat(newTags))
-        .then((res) => {
-          axios.get("http://localhost:8080/tags").then((res1) => {
-            // console.log(res1.data);
-            // console.log(formatTags);
-            const tagIds = formatTags.map((tagName) => {
-              return res1.data.find((tagObject) => {
-                return tagObject.name == tagName;
-              }).id;
-            });
-            console.log([title, summary, text, user.id].concat(tagIds));
-            axios
-              .post(
-                "http://localhost:8080/question",
-                [title, summary, text, user.id].concat(tagIds)
-              )
-              .then((res2) => {
-                console.log(res2.data);
-                handlePostQuestionClick();
-              });
+      api.post("/tags", [user.id].concat(newTags)).then((res) => {
+        api.get("/tags").then((res1) => {
+          // console.log(res1.data);
+          // console.log(formatTags);
+          const tagIds = formatTags.map((tagName) => {
+            return res1.data.find((tagObject) => {
+              return tagObject.name == tagName;
+            }).id;
           });
+          console.log([title, summary, text, user.id].concat(tagIds));
+          api
+            .post("/question", [title, summary, text, user.id].concat(tagIds))
+            .then((res2) => {
+              console.log(res2.data);
+              handlePostQuestionClick();
+            });
         });
+      });
     }
   };
 

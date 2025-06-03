@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import TagTableRow from "./TagTableRow";
-import axios from "axios";
+import api from "../api/api";
 
 const TagTable = () => {
   const [tags, setTags] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:8080/tags").then((res) => setTags(res.data));
+    api.get("/tags").then((res) => setTags(res.data));
   }, []);
 
   return (

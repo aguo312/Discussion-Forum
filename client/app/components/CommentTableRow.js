@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import api from "../api/api";
 
 const CommentTableRow = (props) => {
   const [comment, setComment] = useState({
@@ -10,7 +10,7 @@ const CommentTableRow = (props) => {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:8080/comment/" + props.cid).then((res) => {
+    api.get("/comment/" + props.cid).then((res) => {
       setComment(res.data);
     });
   }, []);

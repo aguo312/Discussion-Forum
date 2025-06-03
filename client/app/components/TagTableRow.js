@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const TagTableRow = (props) => {
   const [questions, setQuestions] = useState([]);
@@ -8,9 +8,7 @@ const TagTableRow = (props) => {
   const { setDataTable, setTagTable, setSearch } = useContext(GlobalContext);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/question")
-      .then((res) => setQuestions(res.data));
+    api.get("/question").then((res) => setQuestions(res.data));
   }, []);
 
   const handleSetTagName = (e) => {

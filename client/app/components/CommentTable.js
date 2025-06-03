@@ -1,6 +1,6 @@
-import axios from "axios";
 import CommentTableRow from "./CommentTableRow";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const { useState, useEffect, useContext } = require("react");
 
@@ -26,13 +26,8 @@ const CommentTable = (props) => {
           error += "Comment cannot be more than 140 characters.\n";
         alert(error);
       } else {
-        axios
-          .post("http://localhost:8080/comment", [
-            comment,
-            user.id,
-            props.dataType,
-            props.data.id,
-          ])
+        api
+          .post("/comment", [comment, user.id, props.dataType, props.data.id])
           .then((res) => {
             setComment("");
             props.onCommentUpdate();

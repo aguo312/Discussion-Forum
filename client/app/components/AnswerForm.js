@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const AnswerForm = () => {
   const { user, setQuestionTable, answerQuestion, setAnswerQuestion } =
@@ -15,8 +15,8 @@ const AnswerForm = () => {
   const [emptyText, setEmptyText] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/question/" + answerQuestion.qid)
+    api
+      .get("/question/" + answerQuestion.qid)
       .then((res) => setQuestion(res.data));
   }, []);
   useEffect(() => setEmptyText(text.length < 1), [text]);
@@ -34,15 +34,9 @@ const AnswerForm = () => {
       error += "Answer Text field is empty.\n";
       alert(error);
     } else {
-      axios
-        .post("http://localhost:8080/answer", [
-          text,
-          user.id,
-          answerQuestion.qid,
-        ])
-        .then((res) => {
-          handlePostAnswerClick();
-        });
+      api.post("/answer", [text, user.id, answerQuestion.qid]).then((res) => {
+        handlePostAnswerClick();
+      });
     }
   };
 

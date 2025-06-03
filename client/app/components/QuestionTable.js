@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
 import DataTableRowTags from "./DataTableRowTags";
 import QuestionTableRow from "./QuestionTableRow";
 import CommentTable from "./CommentTable";
+import api from "../api/api";
 
 const QuestionTable = () => {
   const { questionTable, setQuestionTable, setAnswerQuestion } =
@@ -16,8 +16,8 @@ const QuestionTable = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/question/" + questionTable.qid)
+    api
+      .get("/question/" + questionTable.qid)
       .then((res) => setQuestion(res.data));
   }, []);
 
@@ -27,8 +27,8 @@ const QuestionTable = () => {
   };
 
   const handleEnterComment = () => {
-    axios
-      .get("http://localhost:8080/question/" + questionTable.qid)
+    api
+      .get("/question/" + questionTable.qid)
       .then((res) => setQuestion(res.data));
   };
 

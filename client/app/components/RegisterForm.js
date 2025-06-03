@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const RegisterForm = () => {
   const { setUser, setWelcome, setRegister, setBanner, setDataTable } =
@@ -116,8 +116,8 @@ const RegisterForm = () => {
       //       });
       //   }
       // });
-      axios
-        .post("http://localhost:8080/register", [username, email, password])
+      api
+        .post("/register", [username, email, password])
         .then((res) => {
           handleRegister(res.data);
         })
