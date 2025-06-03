@@ -7,8 +7,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.DiscussionForum.dto.LoginResponse;
 import com.DiscussionForum.dto.UserDTO;
 import com.DiscussionForum.exception.EmailAlreadyUsedException;
+import com.DiscussionForum.exception.EmailNotFoundException;
 import com.DiscussionForum.model.User;
 import com.DiscussionForum.repository.UserRepository;
 
@@ -39,21 +41,15 @@ public class UserService {
         return new UserDTO(newUser.getId(), newUser.getUsername(), newUser.getEmail(), newUser.getReputation());
     }
 
-    public User verifyPassword(String email, String password) {
-        User user = getUserByEmail(email);
-        if (user.getPassword().equals(password)) {
-            return user;
+    public LoginResponse loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EmailNotFoundException("Unregistered Email.\n");
         }
-        return null;
-    }
-
-    public String verify(String email, String password) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(email);
-        }
-        return "Fail";
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        String token = jwtService.generateToken(email);
+        UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.getReputation());
+        return new LoginResponse(token, userDTO);
     }
 
     public User getUserById(String id) {

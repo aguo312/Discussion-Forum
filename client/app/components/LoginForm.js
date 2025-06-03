@@ -33,17 +33,32 @@ const LoginForm = () => {
         error += "Password field is empty.\n";
       }
     } else {
-      axios.get("http://localhost:8080/user/" + email).then((res) => {
-        if (!res.data) {
-          error += "Unregistered Email.\n";
-        } else {
-          axios
-            .post("http://localhost:8080/login", [email, password])
-            .then((res) => {
-              handleLogin(res.data);
-            });
-        }
-      });
+      // axios.get("http://localhost:8080/user/" + email).then((res) => {
+      //   if (!res.data) {
+      //     error += "Unregistered Email.\n";
+      //   } else {
+      //     axios
+      //       .post("http://localhost:8080/login", [email, password])
+      //       .then((res) => {
+      //         const token = res.data.token;
+      //         handleLogin(res.data);
+      //       });
+      //   }
+      // });
+      axios
+        .post("http://localhost:8080/login", [email, password])
+        .then((res) => {
+          const token = res.data.token;
+          handleLogin(res.data);
+        })
+        .catch((err) => {
+          if (err.response && err.response.status == 401) {
+            error += err.response.data;
+          } else {
+            error += "Login Failed. Please try again.\n";
+          }
+          alert(error);
+        });
     }
   };
 
@@ -82,3 +97,18 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+// // axios request to a protected endpoint (e.g., /api/profile)
+// axios.get("http://localhost:8080/api/profile", {
+//   withCredentials: true // 🚨 Required to send HttpOnly cookies
+// })
+// .then((res) => {
+//   const user = res.data;
+//   setUser(user); // or update global state/context
+// })
+// .catch((err) => {
+//   if (err.response?.status === 401) {
+//     alert("Session expired or unauthorized");
+//     // redirect to login, clear state, etc.
+//   }
+// });

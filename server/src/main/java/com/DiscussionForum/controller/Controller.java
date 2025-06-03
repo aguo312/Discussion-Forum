@@ -2,10 +2,13 @@ package com.DiscussionForum.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,18 +16,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DiscussionForum.dto.LoginResponse;
 import com.DiscussionForum.dto.QuestionWithTagDto;
 import com.DiscussionForum.dto.UserDTO;
 import com.DiscussionForum.exception.EmailAlreadyUsedException;
+import com.DiscussionForum.exception.EmailNotFoundException;
 import com.DiscussionForum.model.Answer;
 import com.DiscussionForum.model.Comment;
 import com.DiscussionForum.model.Tag;
 import com.DiscussionForum.model.User;
 import com.DiscussionForum.service.AnswerService;
 import com.DiscussionForum.service.CommentService;
+import com.DiscussionForum.service.JwtService;
 import com.DiscussionForum.service.QuestionService;
 import com.DiscussionForum.service.TagService;
 import com.DiscussionForum.service.UserService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -44,6 +53,9 @@ public class Controller {
 
     @Autowired
     AnswerService answerService;
+
+    @Autowired
+    JwtService jwtService;
 
     @GetMapping("/hello")
     public String getHello() {
@@ -67,8 +79,27 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public String checkUser(@RequestBody String[] info) {
-        return userService.verify(info[0], info[1]);
+    public ResponseEntity<?> checkUser(@RequestBody String[] info, HttpServletResponse response) {
+        try {
+            LoginResponse loginResponse = userService.loginUser(info[0], info[1]);
+
+            Cookie cookie = new Cookie("token", loginResponse.token());
+            cookie.setHttpOnly(true);
+            cookie.setSecure(false);
+            cookie.setPath("/");
+            cookie.setMaxAge(60 * 30);
+            response.addHeader("Set-Cookie", String.format(
+                    "token=%s; HttpOnly; SameSite=Strict; Max-Age=%d; Path=/",
+                    loginResponse.token(),
+                    60 * 30));
+
+            return ResponseEntity.ok(loginResponse.user());
+        } catch (EmailNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password.\n");
+        }
+
     }
 
     @GetMapping("/tags")
@@ -122,4 +153,21 @@ public class Controller {
     public Comment getCommentById(@PathVariable String cid) {
         return commentService.getCommentById(cid);
     }
+
+    // @GetMapping("/api/profile")
+    // public ResponseEntity<?> getProfile(@CookieValue("token") String token) {
+    // if (!jwtService.validateToken(token)) {
+    // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or
+    // expired token");
+    // }
+
+    // // Extract user info from the token
+    // String email = jwtService.getEmailFromToken(token);
+    // User user = userService.findByEmail(email);
+
+    // UserDTO userDto = new UserDTO(user.getId(), user.getUsername(),
+    // user.getEmail());
+    // return ResponseEntity.ok(userDto);
+    // }
+
 }

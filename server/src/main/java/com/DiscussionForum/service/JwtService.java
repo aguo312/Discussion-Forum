@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -81,5 +82,22 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, claim -> claim.getExpiration());
     }
+
+    // public boolean validateToken(String token) {
+    // try {
+    // Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+    // return true;
+    // } catch (JwtException | IllegalArgumentException e) {
+    // return false;
+    // }
+    // }
+
+    // public String getEmailFromToken(String token) {
+    // return Jwts.parser()
+    // .setSigningKey(secretKey)
+    // .parseClaimsJws(token)
+    // .getBody()
+    // .getSubject();
+    // }
 
 }
