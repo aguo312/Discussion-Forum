@@ -14,6 +14,7 @@ Project based on my previous QA Forum project using Spring Boot as the server in
 - jjwt-api
 - jjwt-impl
 - jjwt-jackson
+- dotenv-java
 
 ## Startup
 
