@@ -1,7 +1,9 @@
 package com.DiscussionForum.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,7 @@ import com.DiscussionForum.service.TagService;
 import com.DiscussionForum.service.UserService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -96,6 +99,16 @@ public class Controller {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password.\n");
         }
 
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<Map<String, Boolean>> checkLoginStatus(HttpServletRequest request) {
+        // String token = jwtService.extractTokenFromRequest(request);
+        // boolean isLoggedIn = token != null && jwtService.isTokenValid(token);
+        // System.out.println(isLoggedIn);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isLoggedIn", false);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/tags")

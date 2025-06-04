@@ -11,12 +11,14 @@ import Profile from "./components/Profile";
 import QuestionTable from "./components/QuestionTable";
 import "./styles/globals.css";
 import AnswerForm from "./components/AnswerForm";
+import api from "./api/api";
 
 export const GlobalContext = createContext();
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [user, setUser] = useState(null);
-  const [welcome, setWelcome] = useState(true);
+  const [welcome, setWelcome] = useState(null);
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
   const [banner, setBanner] = useState(false);
@@ -34,6 +36,32 @@ export default function Home() {
     value: false,
     qid: "",
   });
+
+  useEffect(() => {
+    api
+      .get("/status")
+      .then((res) => {
+        console.log(res.data);
+
+        setIsLoggedIn(res.data.isLoggedIn);
+      })
+      .catch((err) => {
+        console.error("Error checking status: ", err);
+        setIsLoggedIn(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn != null) {
+      setWelcome(!isLoggedIn);
+      setBanner(isLoggedIn);
+      setDataTable(isLoggedIn);
+    }
+  }, [isLoggedIn]);
+
+  if (isLoggedIn == null) {
+    return <>Loading...</>;
+  }
 
   // useEffect(() => {
   //   if (login || register || banner) setWelcome(false);

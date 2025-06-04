@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .cors(cors -> {
                 })
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("register", "login").permitAll()
+                        .requestMatchers("/status", "/register", "/login").permitAll()
                         .anyRequest().authenticated())
                 // .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())

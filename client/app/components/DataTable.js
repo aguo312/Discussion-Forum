@@ -7,8 +7,6 @@ const DataTable = () => {
   const { setDataTable, setAskQuestion, search } = useContext(GlobalContext);
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
-    console.log("Mounted");
-
     api.get("/question").then((res) => setQuestions(res.data));
   }, []);
 
