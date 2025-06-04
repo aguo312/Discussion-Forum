@@ -19,7 +19,7 @@ const QuestionTable = () => {
     api
       .get("/question/" + questionTable.qid)
       .then((res) => setQuestion(res.data));
-  }, []);
+  }, [questionTable.qid]);
 
   const handleAnswerQuestionClick = () => {
     setQuestionTable(false);

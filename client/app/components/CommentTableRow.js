@@ -13,7 +13,7 @@ const CommentTableRow = (props) => {
     api.get("/comment/" + props.cid).then((res) => {
       setComment(res.data);
     });
-  }, []);
+  }, [props.cid]);
 
   const localDate = new Date(comment.commentDateTime).toString();
   const commentOn =

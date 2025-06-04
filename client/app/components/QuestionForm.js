@@ -67,7 +67,7 @@ const QuestionForm = () => {
   }, [tags]);
   useEffect(() => {
     setNewTags(formatTags.filter((s) => !existingTags.includes(s)));
-  }, [formatTags]);
+  }, [formatTags, existingTags]);
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleSummaryChange = (e) => setSummary(e.target.value);

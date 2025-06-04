@@ -14,7 +14,10 @@ const CommentTable = (props) => {
 
   useEffect(() => setEmptyComment(comment.length < 1), [comment]);
   useEffect(() => setInvalidComment(comment.length > 140), [comment]);
-  useEffect(() => setErrorDetected(emptyComment || invalidComment));
+  useEffect(
+    () => setErrorDetected(emptyComment || invalidComment),
+    [emptyComment, invalidComment]
+  );
 
   const handleCommentChange = (e) => setComment(e.target.value);
   const handleCommentEnter = (e) => {

@@ -18,7 +18,7 @@ const AnswerForm = () => {
     api
       .get("/question/" + answerQuestion.qid)
       .then((res) => setQuestion(res.data));
-  }, []);
+  }, [answerQuestion.qid]);
   useEffect(() => setEmptyText(text.length < 1), [text]);
 
   const handleTextChange = (e) => setText(e.target.value);

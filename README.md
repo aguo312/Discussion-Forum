@@ -10,6 +10,10 @@ Project based on my previous QA Forum project using Spring Boot as the server in
 
 - Spring Boot Starter Data MongoDB
 - Spring Boot Starter Web
+- Spring Boot Starter Security
+- jjwt-api
+- jjwt-impl
+- jjwt-jackson
 
 ## Startup
 

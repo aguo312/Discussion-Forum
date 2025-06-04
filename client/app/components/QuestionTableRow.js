@@ -7,7 +7,7 @@ const QuestionTableRow = (props) => {
 
   useEffect(() => {
     api.get("/answer/" + props.aid).then((res) => setAnswer(res.data));
-  }, []);
+  }, [props.aid]);
 
   const handleEnterComment = () => {
     api.get("/answer/" + props.aid).then((res) => setAnswer(res.data));
