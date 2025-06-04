@@ -41,9 +41,7 @@ export default function Home() {
     api
       .get("/status")
       .then((res) => {
-        console.log(res.data);
-
-        setIsLoggedIn(res.data.isLoggedIn);
+        setIsLoggedIn(res.data);
       })
       .catch((err) => {
         console.error("Error checking status: ", err);

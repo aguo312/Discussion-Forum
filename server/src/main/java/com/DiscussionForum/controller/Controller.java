@@ -1,9 +1,7 @@
 package com.DiscussionForum.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -102,13 +100,10 @@ public class Controller {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<Map<String, Boolean>> checkLoginStatus(HttpServletRequest request) {
-        // String token = jwtService.extractTokenFromRequest(request);
-        // boolean isLoggedIn = token != null && jwtService.isTokenValid(token);
-        // System.out.println(isLoggedIn);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("isLoggedIn", false);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<Boolean> checkLoginStatus(HttpServletRequest request) {
+        String token = jwtService.extractTokenFromRequest(request);
+        boolean isLoggedIn = token != null && jwtService.isTokenValid(token);
+        return ResponseEntity.ok(isLoggedIn);
     }
 
     @GetMapping("/tags")

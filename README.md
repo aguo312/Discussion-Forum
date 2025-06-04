@@ -26,10 +26,5 @@ On a command line, go to the client directory and use the command `npm run dev`
 
 - Profile page of posts and comments
 - Edit a question's text
-- Return to Datatable on refresh instead of login screen
 - Fix logout
-- Resolvetoken method for conditional rendering the start page depending on if you are logged in
-
-## Future Features
-
-- Persistent login for a set amount of time
+- Guest Functions
