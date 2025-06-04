@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { GlobalContext } from "../page";
+import api from "../api/api";
 
 const Banner = () => {
   const {
+    setIsLoggedIn,
+    setUser,
     setWelcome,
     setBanner,
     setDataTable,
@@ -63,18 +66,22 @@ const Banner = () => {
     });
   };
   const handleClickLogout = () => {
-    setBanner(false);
-    setDataTable(false);
-    setTagTable(false);
-    setProfile(false);
-    setWelcome(true);
-    setQuestionTable({
-      value: false,
-      qid: "",
-    });
-    setAnswerQuestion({
-      value: false,
-      qid: "",
+    api.post("/logout").then((res) => {
+      setIsLoggedIn(false);
+      setUser(null);
+      setBanner(false);
+      setDataTable(false);
+      setTagTable(false);
+      setProfile(false);
+      setWelcome(true);
+      setQuestionTable({
+        value: false,
+        qid: "",
+      });
+      setAnswerQuestion({
+        value: false,
+        qid: "",
+      });
     });
   };
   const handleSearchTextChange = (e) => {

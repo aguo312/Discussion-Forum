@@ -22,6 +22,9 @@ import org.springframework.web.filter.CorsFilter;
 
 import com.DiscussionForum.filter.JwtFilter;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -43,6 +46,17 @@ public class SecurityConfig {
                 // .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .logout(logout -> logout.logoutUrl("/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            Cookie cookie = new Cookie("token", null);
+                            cookie.setHttpOnly(true);
+                            cookie.setSecure(false);
+                            cookie.setPath("/");
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                            response.setStatus(HttpServletResponse.SC_OK);
+                            response.getWriter().flush();
+                        }).permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

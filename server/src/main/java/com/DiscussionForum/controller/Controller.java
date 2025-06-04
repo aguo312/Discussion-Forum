@@ -60,9 +60,11 @@ public class Controller {
         return "This is a message from the server.";
     }
 
-    @GetMapping("/user/{email}")
-    public User getUser(@PathVariable String email) {
-        return userService.getUserByEmail(email);
+    @GetMapping("/status")
+    public ResponseEntity<Boolean> checkLoginStatus(HttpServletRequest request) {
+        String token = jwtService.extractTokenFromRequest(request);
+        boolean isLoggedIn = token != null && jwtService.isTokenValid(token);
+        return ResponseEntity.ok(isLoggedIn);
     }
 
     @PostMapping("/register")
@@ -99,11 +101,20 @@ public class Controller {
 
     }
 
-    @GetMapping("/status")
-    public ResponseEntity<Boolean> checkLoginStatus(HttpServletRequest request) {
-        String token = jwtService.extractTokenFromRequest(request);
-        boolean isLoggedIn = token != null && jwtService.isTokenValid(token);
-        return ResponseEntity.ok(isLoggedIn);
+    // @PostMapping("/logout")
+    // public ResponseEntity<?> logout(HttpServletResponse response) {
+    // Cookie cookie = new Cookie("token", null);
+    // cookie.setHttpOnly(true);
+    // cookie.setSecure(false);
+    // cookie.setPath("/");
+    // cookie.setMaxAge(0);
+    // response.addCookie(cookie);
+    // return ResponseEntity.ok().build();
+    // }
+
+    @GetMapping("/user/{email}")
+    public User getUser(@PathVariable String email) {
+        return userService.getUserByEmail(email);
     }
 
     @GetMapping("/tags")

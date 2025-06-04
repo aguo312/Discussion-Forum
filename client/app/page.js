@@ -89,6 +89,7 @@ export default function Home() {
   return (
     <GlobalContext.Provider
       value={{
+        setIsLoggedIn,
         user,
         setUser,
         setWelcome,

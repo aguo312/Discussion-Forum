@@ -26,5 +26,5 @@ On a command line, go to the client directory and use the command `npm run dev`
 
 - Profile page of posts and comments
 - Edit a question's text
-- Fix logout
+- Fix Register and Login immediately
 - Guest Functions
